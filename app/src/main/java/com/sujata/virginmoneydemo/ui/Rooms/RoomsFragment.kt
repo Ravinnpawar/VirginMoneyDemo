@@ -92,6 +92,6 @@ class RoomsFragment : Fragment() ,RoomsRecyclerAdapter.ItemClickListener{
     }
 
     override fun onClick(position: Int) {
-        ////TODO("Not yet implemented")
+       
     }
 }
