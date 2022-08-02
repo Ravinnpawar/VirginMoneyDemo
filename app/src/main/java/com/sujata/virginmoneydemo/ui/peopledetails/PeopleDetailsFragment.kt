@@ -1,4 +1,4 @@
-package com.sujata.virginmoneydemo.ui.notifications
+package com.sujata.virginmoneydemo.ui.peopledetails
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.sujata.virginmoneydemo.databinding.FragmentNotificationsBinding
+import androidx.navigation.fragment.navArgs
 
-class NotificationsFragment : Fragment() {
+import com.sujata.virginmoneydemo.databinding.FragmentPeoplesDetailsBinding
 
-    private var _binding: FragmentNotificationsBinding? = null
+class PeopleDetailsFragment : Fragment() {
+
+    private var _binding: FragmentPeoplesDetailsBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,10 +24,13 @@ class NotificationsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        val args:PeopleDetailsFragmentArgs by navArgs()
+
         val notificationsViewModel =
             ViewModelProvider(this).get(NotificationsViewModel::class.java)
 
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        _binding = FragmentPeoplesDetailsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textNotifications

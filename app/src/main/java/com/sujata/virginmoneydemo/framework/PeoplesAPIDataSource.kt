@@ -15,12 +15,14 @@ class PeoplesAPIDataSource(private val peoplesApiService: PeoplesApiService) : P
             peoplesResponse.body()?.run {
                 Log.i(TAG, "Size " + this.size)
                 this.forEach {
-                    peoplesData.add(PeoplesData(
+                    peoplesData.add(
+                        PeoplesData(
                             it.avatar,
                             it.firstName,
                             it.jobtitle,
-                            it.lastName
-
+                            it.lastName,
+                            it.email,
+                            it.favouriteColor
                             /*it.email,
                             it.favouriteColor,
                             it.id,

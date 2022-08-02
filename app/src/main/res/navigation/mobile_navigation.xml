@@ -3,23 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_people">
+    app:startDestination="@+id/peoplesFragment">
 
     <fragment
-        android:id="@+id/navigation_people"
+        android:id="@+id/peoplesFragment"
         android:name="com.sujata.virginmoneydemo.ui.peoples.PeoplesFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_peoples" />
+        tools:layout="@layout/fragment_peoples">
+        <action
+            android:id="@+id/action_peoplesFragment_to_peoplesDetailsFragment"
+            app:destination="@id/peopledetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/roomsFragment"
         android:name="com.sujata.virginmoneydemo.ui.Rooms.RoomsFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_rooms" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.sujata.virginmoneydemo.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/peopledetailsFragment"
+        android:name="com.sujata.virginmoneydemo.ui.peopledetails.PeopleDetailsFragment"
+        android:label="@string/title_people_details"
+        tools:layout="@layout/fragment_peoples_details" >
+        <argument
+            android:name="position"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
 </navigation>

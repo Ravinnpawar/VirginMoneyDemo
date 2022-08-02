@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sujata.virginmoneydemo.databinding.FragmentPeoplesBinding
@@ -45,17 +46,18 @@ class PeoplesFragment : Fragment(), PeoplesRecyclerAdapter.ItemClickListener {
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
+                        binding.progressBar.visibility = View.GONE
                         resource.data?.let { peoplesData ->
                             adapter.setListData(peoplesData)
                             binding.recyclerview.adapter = adapter
                         }
                     }
                     Status.ERROR -> {
-                        //binding.progressBar.visibility = View.GONE
+                        binding.progressBar.visibility = View.GONE
                         Toast.makeText(context, resource.message, Toast.LENGTH_LONG).show()
                     }
                     Status.LOADING -> {
-                        // binding.progressBar.visibility = View.VISIBLE
+                         binding.progressBar.visibility = View.VISIBLE
                     }
                 }
             }
@@ -82,12 +84,13 @@ class PeoplesFragment : Fragment(), PeoplesRecyclerAdapter.ItemClickListener {
         binding.recyclerview.layoutManager = layoutManager
         binding.recyclerview.setHasFixedSize(true)
 
-       /* with(binding.swipeRefresh) {
+        with(binding.swiperefresh) {
             setOnRefreshListener {
-                viewModel.fetchNewsHeadlines()
+                binding.progressBar.visibility = View.GONE
+                peoplesViewModel.fetchPeoplesData()
                 isRefreshing = false
             }
-        }*/
+        }
     }
 
     override fun onDestroyView() {
@@ -97,6 +100,8 @@ class PeoplesFragment : Fragment(), PeoplesRecyclerAdapter.ItemClickListener {
 
     override fun onClick(position: Int) {
 
-        Toast.makeText(context, "Message Clicked", Toast.LENGTH_LONG).show()
+        //Toast.makeText(context, "Message Clicked", Toast.LENGTH_LONG).show()
+        val action=PeoplesFragmentDirections.actionPeoplesFragmentToPeoplesDetailsFragment(position)
+        findNavController().navigate(action)
     }
 }

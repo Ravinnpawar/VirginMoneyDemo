@@ -1,4 +1,4 @@
-package com.sujata.virginmoneydemo.ui.notifications
+package com.sujata.virginmoneydemo.ui.peopledetails
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

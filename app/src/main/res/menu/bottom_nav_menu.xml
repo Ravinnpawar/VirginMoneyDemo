@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_people"
+        android:id="@+id/peoplesFragment"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_home" />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/roomsFragment"
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="@string/title_dashboard" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/peopledetailsFragment"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:visible="false"
-        android:title="@string/title_notifications" />
+        android:title="@string/title_people_details" />
 
 </menu>

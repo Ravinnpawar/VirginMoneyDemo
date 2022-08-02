@@ -16,10 +16,7 @@ class ViewModelFactory(val application: Application) : ViewModelProvider.Factory
             PeoplesViewModel(
                 PeoplesRepository(PeoplesAPIDataSource(PeoplesApiService()))
             ) as T
-        } else {
-            throw IllegalArgumentException("ViewModel not found")
-        }
-        return if (modelClass.isAssignableFrom(PeoplesViewModel::class.java)) {
+        } else  if (modelClass.isAssignableFrom(RoomsViewModel::class.java)) {
             RoomsViewModel(
                 RoomsRepository(RoomsAPIDataSource(PeoplesApiService()))
             ) as T

@@ -6,7 +6,9 @@ data class PeoplesData(
     val avatar: String,
     val firstName: String,
     val jobtitle: String,
-    val lastName: String
+    val lastName: String,
+    val email: String,
+    val favouriteColor: String
   /*  val email: String,
     val favouriteColor: String,
     val firstName: String,

@@ -4,11 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.sujata.virginmoneydemo.databinding.FragmentRoomsBinding
+import com.sujata.virginmoneydemo.framework.ViewModelFactory
+import com.sujata.virginmoneydemo.framework.api.Status
+import com.sujata.virginmoneydemo.ui.peoples.PeoplesRecyclerAdapter
 
-class RoomsFragment : Fragment() {
+class RoomsFragment : Fragment() ,RoomsRecyclerAdapter.ItemClickListener{
 
     private var _binding: FragmentRoomsBinding? = null
 
@@ -16,15 +23,44 @@ class RoomsFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private val roomsViewModel :RoomsViewModel by activityViewModels{
+        ViewModelFactory(requireActivity().application)
+    }
+
+    private lateinit var adapter: RoomsRecyclerAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        adapter = RoomsRecyclerAdapter(this)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val roomsViewModel =
-            ViewModelProvider(this).get(RoomsViewModel::class.java)
-
         _binding = FragmentRoomsBinding.inflate(inflater, container, false)
+        setupViews()
+        roomsViewModel.roomsDataResponse.observe(viewLifecycleOwner) {
+            it?.let { resource ->
+                when (resource.status) {
+                    Status.SUCCESS -> {
+                        binding.progressBar.visibility = View.GONE
+                        resource.data?.let { roomsData ->
+                            adapter.setListData(roomsData)
+                            binding.recyclerviewRooms.adapter = adapter
+                        }
+                    }
+                    Status.ERROR -> {
+                        binding.progressBar.visibility = View.GONE
+                        Toast.makeText(context, resource.message, Toast.LENGTH_LONG).show()
+                    }
+                    Status.LOADING -> {
+                         binding.progressBar.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
+
         val root: View = binding.root
 
         /*val textView: TextView = binding.textDashboard
@@ -33,9 +69,29 @@ class RoomsFragment : Fragment() {
         }*/
         return root
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        roomsViewModel.fetchRoomsData()
+    }
 
+    private fun setupViews() {
+        val layoutManager = LinearLayoutManager(context)
+        binding.recyclerviewRooms.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                layoutManager.orientation
+            )
+        )
+        binding.recyclerviewRooms.layoutManager = layoutManager
+        binding.recyclerviewRooms.setHasFixedSize(true)
+
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onClick(position: Int) {
+        ////TODO("Not yet implemented")
     }
 }

@@ -26,11 +26,12 @@ class PeoplesRecyclerAdapter(private val itemClickListener: ItemClickListener) :
             binding.peopleName.text = peoplesData[position].firstName+" "+peoplesData[position].lastName
             binding.titleTV.text=peoplesData[position].jobtitle
             Glide.with(binding.root)
+
                 .load(
                     peoplesData[position].avatar ?: AppCompatResources.getDrawable(
                         context, R.drawable.no_image
                     )
-                )
+                ).placeholder(R.drawable.no_image)
                 .apply(RequestOptions.overrideOf(400))
                 .into(binding.thumbnailIV)
             binding.root.setOnClickListener { itemClickListener.onClick(position) }
