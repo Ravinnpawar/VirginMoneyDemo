@@ -7,18 +7,17 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sujata.virginmoneydemo.commonUtils.ConnectivityUtil
 import com.sujata.virginmoneydemo.databinding.FragmentRoomsBinding
 import com.sujata.virginmoneydemo.framework.ViewModelFactory
 import com.sujata.virginmoneydemo.framework.api.Status
-import com.sujata.virginmoneydemo.ui.peoples.PeoplesRecyclerAdapter
 
 class RoomsFragment : Fragment() ,RoomsRecyclerAdapter.ItemClickListener{
 
     private var _binding: FragmentRoomsBinding? = null
-
+    private var isConnected : Boolean = true
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -71,7 +70,13 @@ class RoomsFragment : Fragment() ,RoomsRecyclerAdapter.ItemClickListener{
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        roomsViewModel.fetchRoomsData()
+        isConnected = ConnectivityUtil.isConnected(context)
+        if (isConnected){
+            roomsViewModel.fetchRoomsData()
+        }else{
+            Toast.makeText(context,"No Internet Available",Toast.LENGTH_LONG)
+        }
+
     }
 
     private fun setupViews() {
@@ -92,6 +97,6 @@ class RoomsFragment : Fragment() ,RoomsRecyclerAdapter.ItemClickListener{
     }
 
     override fun onClick(position: Int) {
-       
+
     }
 }

@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sujata.virginmoneydemo.commonUtils.ConnectivityUtil
 import com.sujata.virginmoneydemo.databinding.FragmentPeoplesBinding
 import com.sujata.virginmoneydemo.framework.ViewModelFactory
 import com.sujata.virginmoneydemo.framework.api.Status
@@ -17,7 +18,7 @@ import com.sujata.virginmoneydemo.framework.api.Status
 class PeoplesFragment : Fragment(), PeoplesRecyclerAdapter.ItemClickListener {
 
     private var _binding: FragmentPeoplesBinding? = null
-
+    private var isConnected : Boolean = true
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -70,7 +71,14 @@ class PeoplesFragment : Fragment(), PeoplesRecyclerAdapter.ItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        peoplesViewModel.fetchPeoplesData()
+        isConnected = ConnectivityUtil.isConnected(context)
+        if (isConnected){
+            peoplesViewModel.fetchPeoplesData()
+        }else{
+            Toast.makeText(context,"No Internet Available",Toast.LENGTH_LONG)
+        }
+
+
     }
 
     private fun setUpViews() {
